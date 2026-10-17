@@ -1,0 +1,25 @@
+[project]
+name = "react-from-scratch"
+version = "0.1.0"
+description = "ReAct (Reason + Act) agent built from scratch in plain Python"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-genai>=1.0.0",
+    "requests>=2.31",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["react"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
