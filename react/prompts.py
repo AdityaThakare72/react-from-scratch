@@ -110,3 +110,50 @@ def build_react_prompt(question: str) -> str:
     """Instructions + examples + the new question, ready for the model to continue."""
     examples = "\n\n".join(format_react_example(ex) for ex in EXAMPLES)
     return f"{REACT_INSTRUCTIONS}\n{examples}\n\nQuestion: {question}\n"
+
+
+# ---------------------------------------------------------------- act-only
+
+ACT_INSTRUCTIONS = """Solve a question answering task with Action and Observation steps. Action can be four types:
+(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.
+(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.
+(3) Calculate[expression], which evaluates an arithmetic expression like 2023 - 1969.
+(4) Finish[answer], which returns the answer and finishes the task.
+Here are some examples.
+"""
+
+
+def format_act_example(example: dict) -> str:
+    """Same example as ReAct, but with the Thought lines removed."""
+    lines = [f"Question: {example['question']}"]
+    for i, (_thought, action, observation) in enumerate(example["steps"], start=1):
+        lines.append(f"Action {i}: {action}")
+        if observation is not None:
+            lines.append(f"Observation {i}: {observation}")
+    return "\n".join(lines)
+
+
+def build_act_prompt(question: str) -> str:
+    examples = "\n\n".join(format_act_example(ex) for ex in EXAMPLES)
+    return f"{ACT_INSTRUCTIONS}\n{examples}\n\nQuestion: {question}\n"
+
+
+# ---------------------------------------------------------------- chain-of-thought
+
+COT_INSTRUCTIONS = """Solve a question answering task by thinking step by step, then give a short final answer after "Answer:". You have no tools; use what you already know.
+Here are some examples.
+"""
+
+
+def format_cot_example(example: dict) -> str:
+    """Same question, answered with reasoning only (no tools, no observations)."""
+    return (
+        f"Question: {example['question']}\n"
+        f"Thought: Let's think step by step. {example['cot']}\n"
+        f"Answer: {example['answer']}"
+    )
+
+
+def build_cot_prompt(question: str) -> str:
+    examples = "\n\n".join(format_cot_example(ex) for ex in EXAMPLES)
+    return f"{COT_INSTRUCTIONS}\n{examples}\n\nQuestion: {question}\nThought: Let's think step by step."

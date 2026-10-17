@@ -1,5 +1,9 @@
 """The ReAct loop: Thought -> Action -> Observation, repeated until Finish or max steps.
 
+Also has the two baselines from the paper:
+  - Act-only: the same loop without Thought lines (tools, but no reasoning)
+  - CoT: reasoning only, one model call, no tools
+
 How one step works:
   1. Send the prompt so far, ending in "Thought i:", to the model.
   2. The model writes a thought and an action, and we stop it at "Observation i:".
@@ -11,8 +15,8 @@ How one step works:
 from dataclasses import dataclass
 
 from react.llm import BaseLLM
-from react.parser import parse_step
-from react.prompts import build_react_prompt
+from react.parser import parse_cot_answer, parse_step
+from react.prompts import build_act_prompt, build_cot_prompt, build_react_prompt
 from react.tools import TOOLS, reset_wiki
 
 # Long Wikipedia paragraphs would blow up the prompt, so cut observations here.
@@ -101,3 +105,26 @@ def run_react(question: str, llm: BaseLLM, max_steps: int = 7, tools: dict | Non
     """ReAct: reason (Thought) and act (Action) in turns."""
     prompt = build_react_prompt(question)
     return run_loop(question, llm, prompt, use_thoughts=True, max_steps=max_steps, tools=tools)
+
+
+def run_act(question: str, llm: BaseLLM, max_steps: int = 7, tools: dict | None = None) -> AgentResult:
+    """Act-only baseline: use tools, but never write down any reasoning."""
+    prompt = build_act_prompt(question)
+    return run_loop(question, llm, prompt, use_thoughts=False, max_steps=max_steps, tools=tools)
+
+
+def run_cot(question: str, llm: BaseLLM, max_steps: int = 7, tools: dict | None = None) -> AgentResult:
+    """Chain-of-thought baseline: think step by step, answer from memory, no tools.
+
+    max_steps and tools are accepted (and ignored) so all three modes can be called
+    the same way from eval.py.
+    """
+    prompt = build_cot_prompt(question)
+    reply = llm.generate(prompt, stop=["\nQuestion:"])
+    answer = parse_cot_answer(reply)
+    trace = "Thought: Let's think step by step." + reply
+    return AgentResult(question, answer, steps=1, finished=answer is not None, trace=trace)
+
+
+# Handy lookup so eval.py can loop over modes by name.
+MODES = {"react": run_react, "act": run_act, "cot": run_cot}
