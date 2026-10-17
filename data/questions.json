@@ -1,0 +1,22 @@
+[
+  {"question": "Were Scott Derrickson and Ed Wood of the same nationality?", "answer": "yes", "type": "comparison"},
+  {"question": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?", "answer": "Chief of Protocol", "type": "bridge"},
+  {"question": "Who was born first, Pablo Trapero or Aleksander Ford?", "answer": "Aleksander Ford", "type": "comparison"},
+  {"question": "In which country was the author of One Hundred Years of Solitude born?", "answer": "Colombia", "type": "bridge"},
+  {"question": "In which city was the director of the 1975 film Jaws born?", "answer": "Cincinnati", "aliases": ["Cincinnati, Ohio"], "type": "bridge"},
+  {"question": "Which band was formed first, Radiohead or Coldplay?", "answer": "Radiohead", "type": "comparison"},
+  {"question": "The composer of the original Star Wars film score was born in which U.S. state?", "answer": "New York", "type": "bridge"},
+  {"question": "Which university was founded by the man pictured on the U.S. one hundred-dollar bill?", "answer": "University of Pennsylvania", "aliases": ["UPenn", "Penn"], "type": "bridge"},
+  {"question": "Which river flows through the capital city of Hungary?", "answer": "Danube", "aliases": ["Danube River", "River Danube"], "type": "bridge"},
+  {"question": "How many years after the sinking of the Titanic did the Lusitania sink?", "answer": "3", "aliases": ["3 years", "three"], "type": "comparison"},
+  {"question": "In what year was the company co-founded by Bill Gates and Paul Allen founded?", "answer": "1975", "type": "bridge"},
+  {"question": "Which mountain is taller, K2 or Kangchenjunga?", "answer": "K2", "type": "comparison"},
+  {"question": "The Eiffel Tower stands in a city that lies on which river?", "answer": "Seine", "aliases": ["Seine River", "River Seine"], "type": "bridge"},
+  {"question": "In what year did the author of the novel Nineteen Eighty-Four die?", "answer": "1950", "type": "bridge"},
+  {"question": "In which country was the director of the 2019 film Parasite born?", "answer": "South Korea", "aliases": ["Korea"], "type": "bridge"},
+  {"question": "Who directed the film in which Heath Ledger played the Joker?", "answer": "Christopher Nolan", "type": "bridge"},
+  {"question": "What was the nationality of the composer of The Four Seasons violin concertos?", "answer": "Italian", "aliases": ["Italy", "Venetian"], "type": "bridge"},
+  {"question": "How many years before the Sydney Opera House opened did the Golden Gate Bridge open?", "answer": "36", "aliases": ["36 years"], "type": "comparison"},
+  {"question": "Which company was founded first, Google or Amazon?", "answer": "Amazon", "type": "comparison"},
+  {"question": "Do the Amazon River and the Nile River flow on the same continent?", "answer": "no", "type": "comparison"}
+]
